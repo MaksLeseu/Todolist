@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import Todolist, {TaskType} from "./Todolist";
 
-function App() {
+function App(): JSX.Element {
     const todoListTitle: string = 'What to learn';
     const tasks: Array<TaskType> = [
         {id: 1, title: 'HTML & CSS', isDone: true},

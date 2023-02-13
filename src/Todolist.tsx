@@ -16,7 +16,7 @@ const Todolist = (props: TodoListPropsType) => {
     const tasksItem: JSX.Element[] | JSX.Element = props.tasks.length
     ? props.tasks.map(task => {
         return (
-            <li>
+            <li key={task.id}>
                 <input type="checkbox" checked={task.isDone}/>
                 <span>{task.title}</span>
             </li>
