@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 import {TasksList} from "./TasksList";
 import {filterValueType} from "./App";
 
@@ -7,6 +7,9 @@ type TodoListPropsType = {
     tasks: TaskType[]
     changeFilterValue: (filter: filterValueType) => void;
     removeTasks: (taskId: number) => void
+    setTasks: any
+    addTasks: () => void
+    setTitle: any
 }
 
 export type TaskType = {
@@ -17,12 +20,16 @@ export type TaskType = {
 
 const Todolist = (props: TodoListPropsType) => {
 
+    function InputValue(event: ChangeEvent<HTMLInputElement>) {
+        props.setTitle(event.currentTarget.value);
+    }
+
     return (
         <div>
             <h3>{props.title}</h3>
             <div>
-                <input/>
-                <button>+</button>
+                <input onChange={InputValue}/>
+                <button onClick={props.addTasks}>+</button>
             </div>
             <ul className={'pad'}>
                 <TasksList removeTask={props.removeTasks} tasks={props.tasks}/>

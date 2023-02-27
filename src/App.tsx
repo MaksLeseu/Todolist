@@ -7,11 +7,13 @@ export type filterValueType = 'all'| 'active'| 'completed';
 function App(): JSX.Element {
     const todoListTitle: string = 'What to learn';
 
-    const [tasks, setTasks] = useState <Array<TaskType>>([
+    let [tasks, setTasks] = useState <Array<TaskType>>([
         {id: 1, title: 'HTML & CSS', isDone: true},
         {id: 2, title: 'JavaScript & TypeScript', isDone: true},
         {id: 3, title: 'React & Reduce', isDone: false}
     ]);
+
+    let [title, setTitle] = useState('');
 
     const [filter, setFilter] = useState <filterValueType>('all');
 
@@ -20,6 +22,10 @@ function App(): JSX.Element {
     function removeTasks(taskId: number) {
         const newTasks = tasks.filter(t => t.id !== taskId);
         setTasks(newTasks);
+    }
+
+    function addTasks() {
+        setTasks([{id: Math.random(), title: title, isDone: false}, ...tasks]);
     }
 
     let filteredTasks: Array<TaskType> = [];
@@ -43,6 +49,9 @@ function App(): JSX.Element {
                 tasks={filteredTasks}
                 changeFilterValue={changeFilterValue}
                 removeTasks={removeTasks}
+                setTasks={setTasks}
+                addTasks={addTasks}
+                setTitle={setTitle}
             />
         </div>
     );
