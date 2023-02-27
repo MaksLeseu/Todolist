@@ -13,7 +13,6 @@ function App(): JSX.Element {
         {id: 3, title: 'React & Reduce', isDone: false}
     ]);
 
-    let [title, setTitle] = useState('');
 
     const [filter, setFilter] = useState <filterValueType>('all');
 
@@ -24,9 +23,10 @@ function App(): JSX.Element {
         setTasks(newTasks);
     }
 
-    function addTasks() {
+    function addTasks(title: string) {
         setTasks([{id: Math.random(), title: title, isDone: false}, ...tasks]);
     }
+
 
     let filteredTasks: Array<TaskType> = [];
 
@@ -51,7 +51,6 @@ function App(): JSX.Element {
                 removeTasks={removeTasks}
                 setTasks={setTasks}
                 addTasks={addTasks}
-                setTitle={setTitle}
             />
         </div>
     );
