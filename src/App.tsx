@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import './App.css';
 import Todolist, {TaskType} from "./Todolist";
+import {v1} from "uuid";
 
 export type filterValueType = 'all'| 'active'| 'completed';
 
@@ -8,9 +9,9 @@ function App(): JSX.Element {
     const todoListTitle: string = 'What to learn';
 
     let [tasks, setTasks] = useState <Array<TaskType>>([
-        {id: 1, title: 'HTML & CSS', isDone: true},
-        {id: 2, title: 'JavaScript & TypeScript', isDone: true},
-        {id: 3, title: 'React & Reduce', isDone: false}
+        {id: v1(), title: 'HTML & CSS', isDone: true},
+        {id: v1(), title: 'JavaScript & TypeScript', isDone: true},
+        {id: v1(), title: 'React & Reduce', isDone: false}
     ]);
 
 
@@ -18,13 +19,13 @@ function App(): JSX.Element {
 
     const changeFilterValue = (filter: filterValueType) => setFilter(filter);
 
-    function removeTasks(taskId: number) {
+    function removeTasks(taskId: string) {
         const newTasks = tasks.filter(t => t.id !== taskId);
         setTasks(newTasks);
     }
 
     function addTasks(title: string) {
-        setTasks([{id: Math.random(), title: title, isDone: false}, ...tasks]);
+        setTasks([{id: v1(), title: title, isDone: false}, ...tasks]);
     }
 
 

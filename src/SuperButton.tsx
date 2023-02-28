@@ -2,8 +2,8 @@ import React from "react";
 
 type SuperButtonPropsType = {
     name: string
-    removeTask: (taskId: number) => void
-    id: number
+    removeTask: (taskId: string) => void
+    id: string
 }
 
 export function SuperButton(props: SuperButtonPropsType) {

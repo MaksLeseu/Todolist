@@ -6,13 +6,13 @@ type TodoListPropsType = {
     title: string
     tasks: TaskType[]
     changeFilterValue: (filter: filterValueType) => void;
-    removeTasks: (taskId: number) => void
+    removeTasks: (taskId: string) => void
     setTasks: any
     addTasks: any
 }
 
 export type TaskType = {
-    id: number
+    id: string
     title: string
     isDone: boolean
 }
@@ -27,7 +27,8 @@ const Todolist = (props: TodoListPropsType) => {
     }
 
     function onKeyPressHandler(e: KeyboardEvent<HTMLInputElement>) {
-        if (e.charCode === 13) {
+        if (e.charCode === 13 && title.trim().length !== 0 && title.length < 20
+        ) {
             props.addTasks(title);
             setTitle('');
         }
@@ -45,7 +46,8 @@ const Todolist = (props: TodoListPropsType) => {
                 <input value={title}
                        onChange={onChangeHandler}
                        onKeyPress={onKeyPressHandler} />
-                <button onClick={onClockHandler}>+</button>
+                <button disabled={title.trim().length === 0 || title.length > 20} onClick={onClockHandler}>+</button>
+                {title.length > 20 && <div> Task title is to long!</div>}
             </div>
             <ul className={'pad'}>
                 <TasksList removeTask={props.removeTasks} tasks={props.tasks} />

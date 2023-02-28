@@ -5,7 +5,7 @@ import {SuperButton} from "./SuperButton";
 
 type TasksListType = {
     tasks: TaskType[]
-    removeTask: (taskId: number) => void
+    removeTask: (taskId: string) => void
 }
 
 
