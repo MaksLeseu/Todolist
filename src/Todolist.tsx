@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, {ChangeEvent, useState, KeyboardEvent} from 'react';
 import {TasksList} from "./TasksList";
 import {filterValueType} from "./App";
 
@@ -22,22 +22,33 @@ const Todolist = (props: TodoListPropsType) => {
     let [title, setTitle] = useState('');
 
 
-    function InputValue(event: ChangeEvent<HTMLInputElement>) {
+    function onChangeHandler(event: ChangeEvent<HTMLInputElement>) {
         setTitle(event.currentTarget.value);
+    }
+
+    function onKeyPressHandler(e: KeyboardEvent<HTMLInputElement>) {
+        if (e.charCode === 13) {
+            props.addTasks(title);
+            setTitle('');
+        }
+    }
+
+    function onClockHandler() {
+        props.addTasks(title);
+        setTitle('');
     }
 
     return (
         <div>
             <h3>{props.title}</h3>
             <div>
-                <input value={title} onChange={InputValue}/>
-                <button onClick={() => {
-                    props.addTasks(title);
-                    setTitle('');
-                }}>+</button>
+                <input value={title}
+                       onChange={onChangeHandler}
+                       onKeyPress={onKeyPressHandler} />
+                <button onClick={onClockHandler}>+</button>
             </div>
             <ul className={'pad'}>
-                <TasksList removeTask={props.removeTasks} tasks={props.tasks}/>
+                <TasksList removeTask={props.removeTasks} tasks={props.tasks} />
             </ul>
             <div>
                 <button onClick={() => props.changeFilterValue('all')}>All</button>
