@@ -28,6 +28,14 @@ function App(): JSX.Element {
         setTasks([{id: v1(), title: title, isDone: false}, ...tasks]);
     }
 
+    function changeTaskStatus(taskId: string, newIsDone: boolean) {
+        setTasks(tasks.map(i => i.id === taskId ? {...i, isDone : newIsDone} : i));
+    }
+
+    function filteredTasksFunc() {
+
+    }
+
 
     let filteredTasks: Array<TaskType> = [];
 
@@ -52,6 +60,8 @@ function App(): JSX.Element {
                 removeTasks={removeTasks}
                 setTasks={setTasks}
                 addTasks={addTasks}
+                changeTaskStatus={changeTaskStatus}
+                filter={filter}
             />
         </div>
     );

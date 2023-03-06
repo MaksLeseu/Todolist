@@ -12,5 +12,47 @@
 }
 
 .text {
+
+}
+
+.todolist {
+  border: 2px hotpink solid;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.task {
   margin-right: 20px;
+  font-weight: 500;
+}
+
+.task-done {
+  margin-right: 20px;
+  text-decoration: line-through;
+  opacity: 0.5;
+}
+
+.filter-btn {
+  background-color: cornflowerblue;
+  border: 2px cornflowerblue solid;
+  font-weight: 700;
+  color: white;
+  border-radius: 3px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.filter-btn__active {
+  background-color: hotpink;
+  border: 2px hotpink solid;
+  font-weight: 700;
+  color: white;
+  border-radius: 3px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.filter-btn__container {
+  display: flex;
+  justify-content: center;
 }

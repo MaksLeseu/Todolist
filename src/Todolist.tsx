@@ -9,6 +9,8 @@ type TodoListPropsType = {
     removeTasks: (taskId: string) => void
     setTasks: any
     addTasks: any
+    changeTaskStatus: (taskId: string, newIsDone: boolean) => void
+    filter: string
 }
 
 export type TaskType = {
@@ -20,42 +22,63 @@ export type TaskType = {
 const Todolist = (props: TodoListPropsType) => {
 
     let [title, setTitle] = useState('');
+    let [error, setError] = useState<boolean>(false);
+
+    const maxLengthUserMessage: number = 20;
+    const isUserMessageToLong = title.length > maxLengthUserMessage;
 
 
     function onChangeHandler(event: ChangeEvent<HTMLInputElement>) {
         setTitle(event.currentTarget.value);
     }
 
-    function onKeyPressHandler(e: KeyboardEvent<HTMLInputElement>) {
-        if (e.charCode === 13 && title.trim().length !== 0 && title.length < 20
-        ) {
+    const addTasks = () => {
+        const trimmedTitle = title.trim();
+        if (trimmedTitle) {
             props.addTasks(title);
-            setTitle('');
+        } else {
+            setError(true);
         }
-    }
-
-    function onClockHandler() {
-        props.addTasks(title);
         setTitle('');
     }
 
+    function onKeyDownHandler(e: KeyboardEvent<HTMLInputElement>) {
+        return e.key === 'Enter' && title.length < maxLengthUserMessage && addTasks();
+    }
+
+    function handlerCreator(filter: any) {
+        return () => props.changeFilterValue(filter);
+    }
+
     return (
-        <div>
+        <div className={'todolist'}>
             <h3>{props.title}</h3>
             <div>
                 <input value={title}
+                       placeholder={'Please enter title.'}
                        onChange={onChangeHandler}
-                       onKeyPress={onKeyPressHandler} />
-                <button disabled={title.trim().length === 0 || title.length > 20} onClick={onClockHandler}>+</button>
-                {title.length > 20 && <div> Task title is to long!</div>}
+                       onKeyDown={onKeyDownHandler} />
+
+                <button disabled={title.length === 0 || isUserMessageToLong} onClick={addTasks}>+</button>
+                {isUserMessageToLong && <div style={{color: 'hotpink'}}> Task title is to long!</div>}
+                {error && <div style={{color: 'hotpink'}}> Title is required!</div>}
+
             </div>
             <ul className={'pad'}>
-                <TasksList removeTask={props.removeTasks} tasks={props.tasks} />
+                <TasksList
+                    setTasks={props.setTasks}
+                    removeTask={props.removeTasks}
+                    tasks={props.tasks}
+                    changeTaskStatus={props.changeTaskStatus}
+                />
             </ul>
-            <div>
-                <button onClick={() => props.changeFilterValue('all')}>All</button>
-                <button onClick={() => props.changeFilterValue('active')}>Active</button>
-                <button onClick={() => props.changeFilterValue('completed')}>Completed</button>
+            <div className={'filter-btn__container'}>
+                <button className={props.filter === 'all' ? 'filter-btn__active': 'filter-btn'}
+                        onClick={handlerCreator('all')}>All</button>
+                <button className={props.filter === 'active' ? 'filter-btn__active': 'filter-btn'}
+                        onClick={handlerCreator('active')}>Active</button>
+                <button className={props.filter === 'completed' ? 'filter-btn__active': 'filter-btn'}
+                        onClick={handlerCreator('completed')}>Completed</button>
             </div>
         </div>
     );
