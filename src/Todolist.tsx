@@ -23,16 +23,21 @@ const Todolist = (props: TodoListPropsType) => {
 
     let [title, setTitle] = useState('');
     let [error, setError] = useState<boolean>(false);
-
     const maxLengthUserMessage: number = 20;
     const isUserMessageToLong = title.length > maxLengthUserMessage;
 
+    const inputErrorClasses = error || title.length > maxLengthUserMessage ? 'input-error': '';
+    const userMaxLengthMessage = isUserMessageToLong && <div style={{color: 'hotpink'}}> Task title is to long!</div>;
+    const userErrorMessage = error && <div style={{color: 'hotpink'}}> Title is required!</div>;
+    const isAddBtnDisabled = title.length === 0 || isUserMessageToLong;
 
-    function onChangeHandler(event: ChangeEvent<HTMLInputElement>) {
+
+    function changeLocalTitle(event: ChangeEvent<HTMLInputElement>) {
+        error && setError(false);
         setTitle(event.currentTarget.value);
     }
 
-    const addTasks = () => {
+    function addTasks() {
         const trimmedTitle = title.trim();
         if (trimmedTitle) {
             props.addTasks(title);
@@ -56,12 +61,14 @@ const Todolist = (props: TodoListPropsType) => {
             <div>
                 <input value={title}
                        placeholder={'Please enter title.'}
-                       onChange={onChangeHandler}
-                       onKeyDown={onKeyDownHandler} />
+                       onChange={changeLocalTitle}
+                       onKeyDown={onKeyDownHandler}
+                       className={inputErrorClasses}
+                />
 
-                <button disabled={title.length === 0 || isUserMessageToLong} onClick={addTasks}>+</button>
-                {isUserMessageToLong && <div style={{color: 'hotpink'}}> Task title is to long!</div>}
-                {error && <div style={{color: 'hotpink'}}> Title is required!</div>}
+                <button disabled={isAddBtnDisabled} onClick={addTasks}>+</button>
+                {userMaxLengthMessage}
+                {userErrorMessage}
 
             </div>
             <ul className={'pad'}>

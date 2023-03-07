@@ -11,8 +11,9 @@
   padding: 0;
 }
 
-.text {
-
+.input-error {
+  border: 2px hotpink solid;
+  outline: none;
 }
 
 .todolist {
