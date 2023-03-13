@@ -17,7 +17,10 @@ function App(): JSX.Element {
 
     const [filter, setFilter] = useState <filterValueType>('all');
 
-    const changeFilterValue = (filter: filterValueType) => setFilter(filter);
+    const changeFilterValue = (filter: filterValueType) => {
+        setFilter(filter);
+        filteredTasksFunc(filter);
+    }
 
     function removeTasks(taskId: string) {
         const newTasks = tasks.filter(t => t.id !== taskId);
@@ -32,12 +35,26 @@ function App(): JSX.Element {
         setTasks(tasks.map(i => i.id === taskId ? {...i, isDone : newIsDone} : i));
     }
 
-    function filteredTasksFunc() {
+    let filteredTasks: Array<TaskType> = [];
+    filteredTasksFunc(filter);
 
+    function filteredTasksFunc( filter: filterValueType) {
+
+        if (filter === 'all') {
+            return filteredTasks = tasks;
+        }
+
+        if (filter === 'active') {
+            return  filteredTasks = tasks.filter(t => t.isDone === false);
+        }
+
+        if (filter === 'completed') {
+            return  filteredTasks = tasks.filter(t => t.isDone === true);
+        }
     }
 
 
-    let filteredTasks: Array<TaskType> = [];
+    /*let filteredTasks: Array<TaskType> = [];
 
     if (filter === 'all') {
         filteredTasks = tasks;
@@ -49,7 +66,7 @@ function App(): JSX.Element {
 
     if (filter === 'completed') {
         filteredTasks = tasks.filter(t => t.isDone === true);
-    }
+    }*/
 
     return (
         <div className="App">
