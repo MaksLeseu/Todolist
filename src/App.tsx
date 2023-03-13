@@ -5,7 +5,15 @@ import {v1} from "uuid";
 
 export type filterValueType = 'all'| 'active'| 'completed';
 
+type TodoListType = {
+    id: string
+    title: string
+    filter: filterValueType
+}
+
 function App(): JSX.Element {
+
+    // BLl
     const todoListTitle: string = 'What to learn';
 
     let [tasks, setTasks] = useState <Array<TaskType>>([
@@ -16,11 +24,21 @@ function App(): JSX.Element {
 
 
     const [filter, setFilter] = useState <filterValueType>('all');
+    const changeFilterValue = (filter: filterValueType) => setFilter(filter);
 
-    const changeFilterValue = (filter: filterValueType) => {
-        setFilter(filter);
-        filteredTasksFunc(filter);
+    let filteredTasks: Array<TaskType> = [];
+
+    const getFilteredTasks = (tasks: Array<TaskType>, filter: filterValueType): Array<TaskType> => {
+        switch (filter) {
+            case "active":
+                return filteredTasks = tasks.filter(t => t.isDone === false);
+            case "completed":
+                return filteredTasks = tasks.filter(t => t.isDone === true);
+            default:
+                return filteredTasks = tasks;
+        }
     }
+    getFilteredTasks(tasks, filter);
 
     function removeTasks(taskId: string) {
         const newTasks = tasks.filter(t => t.id !== taskId);
@@ -34,39 +52,6 @@ function App(): JSX.Element {
     function changeTaskStatus(taskId: string, newIsDone: boolean) {
         setTasks(tasks.map(i => i.id === taskId ? {...i, isDone : newIsDone} : i));
     }
-
-    let filteredTasks: Array<TaskType> = [];
-    filteredTasksFunc(filter);
-
-    function filteredTasksFunc( filter: filterValueType) {
-
-        if (filter === 'all') {
-            return filteredTasks = tasks;
-        }
-
-        if (filter === 'active') {
-            return  filteredTasks = tasks.filter(t => t.isDone === false);
-        }
-
-        if (filter === 'completed') {
-            return  filteredTasks = tasks.filter(t => t.isDone === true);
-        }
-    }
-
-
-    /*let filteredTasks: Array<TaskType> = [];
-
-    if (filter === 'all') {
-        filteredTasks = tasks;
-    }
-
-    if (filter === 'active') {
-        filteredTasks = tasks.filter(t => t.isDone === false);
-    }
-
-    if (filter === 'completed') {
-        filteredTasks = tasks.filter(t => t.isDone === true);
-    }*/
 
     return (
         <div className="App">
