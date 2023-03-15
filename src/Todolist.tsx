@@ -3,14 +3,16 @@ import {TasksList} from "./TasksList";
 import {filterValueType} from "./App";
 
 type TodoListPropsType = {
+    todoListId: string
     title: string
     tasks: TaskType[]
-    changeFilterValue: (filter: filterValueType) => void;
-    removeTasks: (taskId: string) => void
-    setTasks: any
-    addTasks: any
-    changeTaskStatus: (taskId: string, newIsDone: boolean) => void
     filter: string
+    setTasks: any
+    changeTdoListFilter: (filter: filterValueType, todoListId: string) => void;
+    removeTasks: (taskId: string, todoListId: string) => void
+    addTasks: (title: string, todoListId: string) => void
+    changeTaskStatus: (taskId: string, newIsDone: boolean, todoListId: string) => void
+    removeTodoList: (todoListId: string) => void
 }
 
 export type TaskType = {
@@ -32,32 +34,35 @@ const Todolist = (props: TodoListPropsType) => {
     const isAddBtnDisabled = title.length === 0 || isUserMessageToLong;
 
 
-    function changeLocalTitle(event: ChangeEvent<HTMLInputElement>) {
+    const changeLocalTitle = (event: ChangeEvent<HTMLInputElement>) => {
         error && setError(false);
         setTitle(event.currentTarget.value);
     }
 
-    function addTasks() {
+    const addTasks = () => {
         const trimmedTitle = title.trim();
         if (trimmedTitle) {
-            props.addTasks(title);
+            props.addTasks(title, props.todoListId);
         } else {
             setError(true);
         }
         setTitle('');
     }
 
-    function onKeyDownHandler(e: KeyboardEvent<HTMLInputElement>) {
+    const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         return e.key === 'Enter' && title.length < maxLengthUserMessage && addTasks();
     }
 
-    function handlerCreator(filter: any) {
-        return () => props.changeFilterValue(filter);
+    const handlerCreator = (filter: filterValueType) => {
+        return () => props.changeTdoListFilter(filter, props.todoListId);
     }
+
+    const removeTodoList = () => props.removeTodoList(props.todoListId);
 
     return (
         <div className={'todolist'}>
             <h3>{props.title}</h3>
+            <button onClick={removeTodoList}>xX</button>
             <div>
                 <input value={title}
                        placeholder={'Please enter title.'}
@@ -73,6 +78,7 @@ const Todolist = (props: TodoListPropsType) => {
             </div>
             <ul className={'pad'}>
                 <TasksList
+                    todoListId={props.todoListId}
                     setTasks={props.setTasks}
                     removeTask={props.removeTasks}
                     tasks={props.tasks}
