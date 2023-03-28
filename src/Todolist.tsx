@@ -2,6 +2,7 @@ import React, {ChangeEvent, useState, KeyboardEvent} from 'react';
 import {TasksList} from "./TasksList";
 import {filterValueType} from "./App";
 import AddItemForm from "./AddItemForm";
+import {EditableSpan} from "./EditableSpan";
 
 type TodoListPropsType = {
     todoListId: string
@@ -14,6 +15,7 @@ type TodoListPropsType = {
     addTasks: (title: string, todoListId: string) => void
     changeTaskStatus: (taskId: string, newIsDone: boolean, todoListId: string) => void
     removeTodoList: (todoListId: string) => void
+    changeTaskTitle: (taskId: string, newTitle: string, todoListId: string) => void
 }
 
 export type TaskType = {
@@ -49,6 +51,7 @@ const Todolist = (props: TodoListPropsType) => {
                     removeTask={props.removeTasks}
                     tasks={props.tasks}
                     changeTaskStatus={props.changeTaskStatus}
+                    changeTaskTitle={props.changeTaskTitle}
                 />
             </ul>
             <div className={'filter-btn__container'}>

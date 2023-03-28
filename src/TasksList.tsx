@@ -2,6 +2,7 @@ import React, {ChangeEvent} from "react";
 import {TaskType} from "./Todolist";
 import './App.css'
 import {SuperButton} from "./SuperButton";
+import {EditableSpan} from "./EditableSpan";
 
 type TasksListType = {
     todoListId: string
@@ -9,6 +10,7 @@ type TasksListType = {
     removeTask: (taskId: string, todoListId: string) => void
     setTasks: any
     changeTaskStatus: (taskId: string, newIsDone: boolean, todoListId: string) => void
+    changeTaskTitle: (taskId: string, newTitle: string, todoListId: string) => void
 }
 
 
@@ -19,11 +21,14 @@ export function TasksList(props: TasksListType) {
 
             const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>) => props.changeTaskStatus(task.id, e.currentTarget.checked, props.todoListId);
             const taskClasses = task.isDone ? 'task-done': 'task';
+            const changeTaskTitleHandler = (title: string) => {
+                props.changeTaskTitle(task.id, title, props.todoListId)
+            }
         return (
             <li key={task.id}>
                 <input onChange={changeTaskStatus} type={"checkbox"} checked={task.isDone}></input>
-                <span className={taskClasses}>{task.title}</span>
-                <SuperButton name={'x'} removeTask={props.removeTask} id={task.id} todoListId={props.todoListId}/>
+                <EditableSpan title={task.title} spanClasses={taskClasses} changeTaskTitleHandler={changeTaskTitleHandler} />
+                <SuperButton name={'x'} removeTask={props.removeTask} id={task.id} todoListId={props.todoListId} />
             </li>
         )
         })
