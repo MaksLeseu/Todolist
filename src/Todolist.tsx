@@ -3,6 +3,8 @@ import {TasksList} from "./TasksList";
 import {filterValueType} from "./App";
 import AddItemForm from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
+import {Button, IconButton} from "@mui/material";
+import BackspaceIcon from "@mui/icons-material/Backspace";
 
 type TodoListPropsType = {
     todoListId: string
@@ -16,6 +18,7 @@ type TodoListPropsType = {
     changeTaskStatus: (taskId: string, newIsDone: boolean, todoListId: string) => void
     removeTodoList: (todoListId: string) => void
     changeTaskTitle: (taskId: string, newTitle: string, todoListId: string) => void
+    changeTodolistTitle: (newTitle: string, todoListId: string) => void
 }
 
 export type TaskType = {
@@ -36,10 +39,21 @@ const Todolist = (props: TodoListPropsType) => {
         props.addTasks(title, props.todoListId)
     }
 
+    const changeTitle = (title: string) => {
+        props.changeTodolistTitle(title, props.todoListId)
+    }
+
     return (
         <div className={'todolist'}>
-            <h3>{props.title}</h3>
-            <button onClick={removeTodoList}>xX</button>
+            <h3 className={'title'}>{<EditableSpan title={props.title} changeTitle={changeTitle} />}</h3>
+            {/*<button onClick={removeTodoList}>xX</button>*/}
+            <IconButton
+                color={'secondary'}
+                onClick={removeTodoList}
+            >
+                <BackspaceIcon />
+            </IconButton>
+
             <AddItemForm
                 maxLengthUserMessage={15}
                 addNewItem={addNewItem}
@@ -55,12 +69,38 @@ const Todolist = (props: TodoListPropsType) => {
                 />
             </ul>
             <div className={'filter-btn__container'}>
-                <button className={props.filter === 'all' ? 'filter-btn__active': 'filter-btn'}
-                        onClick={handlerCreator('all')}>All</button>
-                <button className={props.filter === 'active' ? 'filter-btn__active': 'filter-btn'}
-                        onClick={handlerCreator('active')}>Active</button>
-                <button className={props.filter === 'completed' ? 'filter-btn__active': 'filter-btn'}
-                        onClick={handlerCreator('completed')}>Completed</button>
+                <Button
+                    size={'small'}
+                    variant="contained"
+                    disableElevation
+                    color={props.filter === 'all' ? 'secondary': 'primary'}
+                    /*className={props.filter === 'all' ? 'filter-btn__active': 'filter-btn'}*/
+                    onClick={handlerCreator('all')}
+                >
+                    All
+                </Button>
+
+                <Button
+                    size={'small'}
+                    variant="contained"
+                    disableElevation
+                    color={props.filter === 'active' ? 'secondary': 'primary'}
+                    /*className={props.filter === 'active' ? 'filter-btn__active': 'filter-btn'}*/
+                    onClick={handlerCreator('active')}
+                >
+                    Active
+                </Button>
+
+                <Button
+                    size={'small'}
+                    variant="contained"
+                    disableElevation
+                    color={props.filter === 'completed' ? 'secondary': 'primary'}
+                    /*className={props.filter === 'completed' ? 'filter-btn__active': 'filter-btn'}*/
+                    onClick={handlerCreator('completed')}
+                >
+                    Completed
+                </Button>
             </div>
         </div>
     );

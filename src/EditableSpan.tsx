@@ -3,14 +3,14 @@ import React, {ChangeEvent, FC, useState} from "react";
 type EditableSpanPropsType = {
     title: string
     spanClasses?: string
-    changeTaskTitleHandler: (title: string) => void
+    changeTitle: (title: string) => void
 }
 
 export const EditableSpan: FC<EditableSpanPropsType> = (
     {
         title,
         spanClasses,
-        changeTaskTitleHandler
+        changeTitle
     }
 ) => {
     const [editMode, setEditMode] = useState<boolean>(false)
@@ -25,7 +25,7 @@ export const EditableSpan: FC<EditableSpanPropsType> = (
     }
     const offEditMode = () => {
         setEditMode(false)
-        changeTaskTitleHandler(localTitle)
+        changeTitle(localTitle)
     }
 
     return (

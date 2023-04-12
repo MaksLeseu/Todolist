@@ -3,6 +3,7 @@ import {TaskType} from "./Todolist";
 import './App.css'
 import {SuperButton} from "./SuperButton";
 import {EditableSpan} from "./EditableSpan";
+import {Checkbox, List, ListItem} from "@mui/material";
 
 type TasksListType = {
     todoListId: string
@@ -21,22 +22,35 @@ export function TasksList(props: TasksListType) {
 
             const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>) => props.changeTaskStatus(task.id, e.currentTarget.checked, props.todoListId);
             const taskClasses = task.isDone ? 'task-done': 'task';
-            const changeTaskTitleHandler = (title: string) => {
+            const changeTitle = (title: string) => {
                 props.changeTaskTitle(task.id, title, props.todoListId)
             }
         return (
-            <li key={task.id}>
-                <input onChange={changeTaskStatus} type={"checkbox"} checked={task.isDone}></input>
-                <EditableSpan title={task.title} spanClasses={taskClasses} changeTaskTitleHandler={changeTaskTitleHandler} />
-                <SuperButton name={'x'} removeTask={props.removeTask} id={task.id} todoListId={props.todoListId} />
-            </li>
+            <ListItem
+                disablePadding={true}
+                disableGutters
+                divider
+                key={task.id}
+                secondaryAction={
+                    <SuperButton name={'x'} removeTask={props.removeTask} id={task.id} todoListId={props.todoListId} />
+                }
+            >
+                <Checkbox
+                    size={'small'}
+                    onChange={changeTaskStatus}
+                    checked={task.isDone}
+                ></Checkbox>
+                <EditableSpan title={task.title} spanClasses={taskClasses} changeTitle={changeTitle} />
+            </ListItem>
         )
         })
     : <span>The list is empty!</span>
 
     return (
-        <ul>
+        <List
+            disablePadding={false}
+        >
             {TasksItem}
-        </ul>
+        </List>
     )
 }

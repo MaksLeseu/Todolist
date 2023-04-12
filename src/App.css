@@ -1,10 +1,14 @@
-.App {
+/*.App {
   padding: 30px;
   display: flex;
 }
 
 .App > div {
   margin-right: 50px;
+}*/
+
+.title {
+  display: inline-block;
 }
 
 .pad {
@@ -17,10 +21,11 @@
 }
 
 .todolist {
-  border: 2px hotpink solid;
+  border: 2px #9c27b0 solid;
   padding: 20px;
   border-radius: 10px;
   background-color: #f2f2f2;
+  max-width: 320px !important;
 }
 
 .task {
@@ -57,4 +62,5 @@
 .filter-btn__container {
   display: flex;
   justify-content: center;
+  gap: 5px;
 }
