@@ -43,7 +43,7 @@ function App(): JSX.Element {
         {id: todoListId_2, title: 'What to buy',}
     ]);
 
-    const [isDarkMode, setDarkMode] = useState<boolean>(true)
+    const [isDarkMode, setDarkMode] = useState<boolean>(false)
 
     const [tasks, setTasks] = useState<TasksStateType>({
         [todoListId_1]: {
