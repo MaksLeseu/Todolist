@@ -70,6 +70,17 @@ function App(): JSX.Element {
         }})
     }
 
+    const addTodolist = (title: string) => {
+        const newTodoListId = v1();
+        const newTodoList = {id: newTodoListId, title: title,}
+
+        setTodoList([...todoList, newTodoList])
+        setTasks({...tasks, [newTodoListId]: {data: [], filter: 'all'}})
+    }
+
+    const changeTodolistTitle = (newTitle: string, todoListId: string) => {
+        setTodoList(todoList.map(tl => tl.id === todoListId ? {...tl, title: newTitle} : tl))
+    }
 
     const removeTodoList = (todoListId: string) => {
         setTodoList(todoList.filter(tl => tl.id !== todoListId));
@@ -102,10 +113,6 @@ function App(): JSX.Element {
         }})
     }
 
-    const changeTodolistTitle = (newTitle: string, todoListId: string) => {
-        setTodoList(todoList.map(tl => tl.id === todoListId ? {...tl, title: newTitle} : tl))
-    }
-
     const getFilteredTasks = (tasks: TaskType[], filter: filterValueType): TaskType[] => {
         switch (filter) {
             case "active":
@@ -117,13 +124,6 @@ function App(): JSX.Element {
         }
     }
 
-    const addTodolist = (title: string) => {
-        const newTodoListId = v1();
-        const newTodoList = {id: newTodoListId, title: title,}
-
-        setTodoList([...todoList, newTodoList])
-        setTasks({...tasks, [newTodoListId]: {data: [], filter: 'all'}})
-    }
 
     const todoListComponents = todoList.map(tl => {
         let filteredTasks: Array<TaskType> = getFilteredTasks(tasks[tl.id].data, tasks[tl.id].filter);
@@ -201,7 +201,6 @@ function App(): JSX.Element {
                 </Container>
             </div>
         </ThemeProvider>
-
     );
 }
 
