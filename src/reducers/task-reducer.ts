@@ -1,21 +1,21 @@
 import React from "react";
-import {StateType, TaskType} from "./task-reducer.test";
 import {v1} from "uuid";
 import {AddTodolistActionType, RemoveActionTodolistType} from "./todolists-reducer";
+import {TasksStateType} from "../AppWithReducers";
 
 type RemoveTaskActionType = ReturnType<typeof removeTaskAC>
 type AddTaskActionType = ReturnType<typeof addTaskAC>
 type ChangeTaskStatusACType = ReturnType<typeof changeTaskStatusAC>
 type ChangeTaskTitleACType = ReturnType<typeof changeTaskTitleAC>
 
-type ActionType = RemoveTaskActionType
+export type ActionsTaskType = RemoveTaskActionType
     | AddTaskActionType
     | ChangeTaskStatusACType
     | ChangeTaskTitleACType
     | AddTodolistActionType
     | RemoveActionTodolistType
 
-export const tasksReducer = (state: any, action: ActionType) => {
+export const tasksReducer = (state: TasksStateType, action: ActionsTaskType): TasksStateType => {
     switch (action.type) {
         case 'REMOVE-TASK':
             return {

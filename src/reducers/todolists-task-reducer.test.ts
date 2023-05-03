@@ -1,9 +1,11 @@
-import {addTodolistActionCreator, todolistsReducer} from "./todolists-reducer";
+import {addTodolistAC, todolistsReducer} from "./todolists-reducer";
 import {tasksReducer} from "./task-reducer";
+import {filterValueType} from "../AppWithReducers";
 
 type TodoListsType = {
     id: string
     title:string
+    filter: filterValueType
 }
 type TodolistsStateType = TodoListsType[]
 
@@ -11,7 +13,7 @@ test('ids should be equals', () => {
     const startTasksState = {}
     const startTodolistsState: TodolistsStateType = []
 
-    const action = addTodolistActionCreator('new todolists')
+    const action = addTodolistAC('new todolists')
 
 
     const endTasksState = tasksReducer(startTasksState, action)
