@@ -11,4 +11,3 @@ export const store = legacy_createStore(rootReducer)
 
 export type AppRootStateType = ReturnType<typeof rootReducer>
 
-/*window.store = store;*/
