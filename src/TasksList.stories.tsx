@@ -1,3 +1,4 @@
+/*
 import React, {useState} from "react";
 import {TasksList} from "./TasksList";
 import {action} from "@storybook/addon-actions";
@@ -64,3 +65,6 @@ export const TaskBaseExample = () => {
         </>
     )
 }
+*/
+
+export let a = 21

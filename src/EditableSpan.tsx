@@ -1,4 +1,4 @@
-import React, {ChangeEvent, FC, useState} from "react";
+import React, {ChangeEvent, FC, memo, useState} from "react";
 
 type EditableSpanPropsType = {
     title: string
@@ -6,13 +6,14 @@ type EditableSpanPropsType = {
     changeTitle: (title: string) => void
 }
 
-export const EditableSpan: FC<EditableSpanPropsType> = (
+export const EditableSpan: FC<EditableSpanPropsType> = memo((
     {
         title,
         spanClasses,
         changeTitle
     }
 ) => {
+    console.log('EditableSpan')
     const [editMode, setEditMode] = useState<boolean>(false)
     const [localTitle, setLocalTitle] = useState<string>(title)
 
@@ -39,4 +40,4 @@ export const EditableSpan: FC<EditableSpanPropsType> = (
             onDoubleClick={onEditMode}
         >{title}</span>
     )
-}
+})

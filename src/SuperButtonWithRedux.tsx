@@ -1,18 +1,20 @@
 import React from "react";
 import BackspaceIcon from '@mui/icons-material/Backspace';
 import {IconButton} from "@mui/material";
+import {useDispatch} from "react-redux";
+import {removeTaskAC} from "./reducers/task-reducer";
 
-type SuperButtonPropsType = {
-    name: string
-    removeTask: (taskId: string, todoListId: string) => void
+type SuperButtonWithRedux = {
     id: string
     todoListId: string
 }
 
-export function SuperButton(props: SuperButtonPropsType) {
+export function SuperButtonWithRedux(props: SuperButtonWithRedux) {
+    const dispatch = useDispatch()
 
     const removeTaskHandler = () => {
-        props.removeTask(props.id, props.todoListId)
+        /*props.removeTask(props.id, props.todoListId)*/
+        dispatch(removeTaskAC(props.id, props.todoListId))
     }
 
     return (

@@ -1,4 +1,4 @@
-import React, {ChangeEvent, FC, KeyboardEvent, useState} from "react";
+import React, {ChangeEvent, FC, KeyboardEvent, memo, useState} from "react";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import {IconButton, TextField} from "@mui/material";
 
@@ -8,7 +8,7 @@ type AddItemFormType = {
 
 }
 
-const AddItemForm: FC<AddItemFormType> = (
+const AddItemForm: FC<AddItemFormType> = memo((
     {
         maxLengthUserMessage,
         addNewItem,
@@ -72,6 +72,6 @@ const AddItemForm: FC<AddItemFormType> = (
             {userErrorMessage}
         </div>
     )
-}
+})
 
 export default AddItemForm;

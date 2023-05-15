@@ -1,7 +1,5 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import './App.css';
-import Todolist, {TaskType} from "./Todolist";
-import {v1} from "uuid";
 import AddItemForm from "./AddItemForm";
 import {
     AppBar,
@@ -28,6 +26,8 @@ import {
 } from "./reducers/task-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./reducers/store";
+import Todolist, {TaskType} from "./Todolist";
+import {v1} from "uuid";
 
 export type filterValueType = 'all'| 'active'| 'completed';
 
@@ -41,52 +41,51 @@ export type TasksStateType = {
     [todolistId: string]: TaskType[]
 }
 
-function AppWithRedux(): JSX.Element {
+const AppWithRedux = (): JSX.Element => {
+
 
     // BLL
     const todoListId_1 = v1();
     const todoListId_2 = v1();
-    const todoList = useSelector<AppRootStateType, TodoListType[]> ((state => state.todolists));
-
     const [isDarkMode, setDarkMode] = useState<boolean>(false)
 
-    const tasks = useSelector<AppRootStateType, TasksStateType> ((state => state.tasks));
-
+    const todoList = useSelector<AppRootStateType, TodoListType[]> (state => state.todolists);
+    const tasks = useSelector<AppRootStateType, TasksStateType> (state => state.tasks);
     const dispatch = useDispatch()
 
-    const changeTdoListFilter = (filter: filterValueType, todoListId: string) => {
+    const changeTdoListFilter = useCallback((filter: filterValueType, todoListId: string) => {
         dispatch(changeTodolistFilterAC(todoListId, filter))
-    }
+    }, [dispatch])
 
-    const addTodolist = (title: string) => {
+    const addTodolist = useCallback((title: string) => {
         dispatch(addTodolistAC(title))
-    }
+    }, [dispatch])
 
-    const changeTodolistTitle = (newTitle: string, todoListId: string) => {
+    const changeTodolistTitle = useCallback((newTitle: string, todoListId: string) => {
         dispatch(changeTodolistTitleAC(todoListId, newTitle))
-    }
+    }, [dispatch])
 
-    const removeTodoList = (todoListId: string) => {
+    const removeTodoList = useCallback((todoListId: string) => {
         dispatch(removeTodolistAC(todoListId))
-    }
+    }, [dispatch])
 
-    const removeTasks = (taskId: string, todoListId: string) => {
+    const removeTasks = useCallback((taskId: string, todoListId: string) => {
         dispatch(removeTaskAC(taskId, todoListId))
-    }
+    }, [dispatch])
 
-    const addTasks = (title: string, todoListId: string) => {
+    const addTasks = useCallback((title: string, todoListId: string) => {
         dispatch(addTaskAC(title, todoListId))
-    }
+    }, [dispatch])
 
-    const changeTaskStatus = (taskId: string, newIsDone: boolean, todoListId: string) => {
+    const changeTaskStatus = useCallback((taskId: string, newIsDone: boolean, todoListId: string) => {
         dispatch(changeTaskStatusAC(taskId, newIsDone, todoListId))
-    }
+    }, [dispatch])
 
-    const changeTaskTitle = (taskId: string, newTitle: string, todoListId: string) => {
+    const changeTaskTitle = useCallback((taskId: string, newTitle: string, todoListId: string) => {
         dispatch(changeTaskTitleAC(taskId, newTitle, todoListId))
-    }
+    }, [dispatch])
 
-    const getFilteredTasks = (tasks: TaskType[], filter: filterValueType): TaskType[] => {
+    /*const getFilteredTasks = (tasks: TaskType[], filter: filterValueType): TaskType[] => {
         switch (filter) {
             case "active":
                 return tasks.filter(t => !t.isDone);
@@ -95,11 +94,12 @@ function AppWithRedux(): JSX.Element {
             default:
                 return tasks;
         }
-    }
+    }*/
 
 
     const todoListComponents = todoList.map(tl => {
-        let filteredTasks: Array<TaskType> = getFilteredTasks(tasks[tl.id], tl.filter);
+        /*let filteredTasks: Array<TaskType> = getFilteredTasks(tasks[tl.id], tl.filter);*/
+
         return (
             <Grid item>
                 <Paper elevation={6}>
@@ -107,7 +107,7 @@ function AppWithRedux(): JSX.Element {
                         key={tl.id}
                         todoListId={tl.id}
                         title={tl.title}
-                        tasks={filteredTasks}
+                        tasks={tasks[tl.id]}
                         filter={tl.filter}
                         changeTdoListFilter={changeTdoListFilter}
                         removeTasks={removeTasks}
@@ -158,7 +158,7 @@ function AppWithRedux(): JSX.Element {
                             <FormControlLabel
                                 control={<Checkbox
                                             onChange={(e) => setDarkMode(e.currentTarget.checked)} />}
-                                    label={isDarkMode ? 'Light mode' : 'Dark mode'}
+                                     label={isDarkMode ? 'Light mode' : 'Dark mode'}
                                 />
                         </FormGroup>
                         <Button color={'inherit'}>Login</Button>

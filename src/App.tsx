@@ -34,6 +34,7 @@ export type TasksStateType = {
 }
 
 function App(): JSX.Element {
+    console.log('App')
 
     // BLL
     const todoListId_1 = v1();

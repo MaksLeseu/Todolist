@@ -36,13 +36,13 @@ export const tasksReducer = (state = initialState, action: ActionsTaskType): Tas
             return {
                 ...state,
                 [action.payload.todolistId]: state[action.payload.todolistId]
-                    .map((task: {id: string, title: string, isDone: boolean}) => task.id === action.payload.taskId ? {...task, isDone: action.payload.taskStatus} : task)
+                    .map(task => task.id === action.payload.taskId ? {...task, isDone: action.payload.taskStatus} : task)
             }
             case 'CHANGE-TASK-TITLE':
             return {
                 ...state,
                 [action.payload.todolistId]: state[action.payload.todolistId]
-                    .map((task: {id: string, title: string, isDone: boolean}) => task.id === action.payload.taskId ? {...task, title: action.payload.title} : task)
+                    .map(task => task.id === action.payload.taskId ? {...task, title: action.payload.title} : task)
             }
         case 'ADD-TODOLIST':
             return {
