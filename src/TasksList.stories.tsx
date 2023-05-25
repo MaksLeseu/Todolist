@@ -4,6 +4,7 @@ import {action} from "@storybook/addon-actions";
 import {v1} from "uuid";
 import {Meta, StoryObj} from "@storybook/react";
 import AddItemForm from "./AddItemForm";
+import {TasksListWithRedux} from "./TasksListWithRedux";
 
 /*export default {
     title: 'Tasks',
@@ -67,39 +68,31 @@ export const TaskBaseExample = () => {
     )
 }*/
 
-const meta: Meta<typeof TasksList> = {
+const meta: Meta<typeof TasksListWithRedux> = {
     title: 'TODOLISTS/Task',
-    component: TasksList,
+    component: TasksListWithRedux,
     tags: ['autodocs'],
     argTypes: {
-        changeTaskStatus: {
-            action: 'clicked',
-        },
-        changeTaskTitle: {
-            action: 'clicked',
-        },
-        removeTask: {
-            action: 'clicked',
-        }
+        task: {id: '1', title: 'JavaScript', isDone: false}
     }
 }
 
-type Story = StoryObj<typeof TasksList>
+type Story = StoryObj<typeof TasksListWithRedux>
 
 export const TaskListStoryExampleOne: Story = {
     args: {
-        tasks: [
+        /*tasks: [
             {id: '1', title: 'JavaScript', isDone: false},
             {id: '2', title: 'React', isDone: false},
-        ]
+        ]*/
     }
 }
 export const TaskListStoryExampleTwo: Story = {
     args: {
-        tasks: [
+        /*tasks: [
             {id: '1', title: 'JavaScript', isDone: true},
             {id: '2', title: 'React', isDone: true},
-        ]
+        ]*/
     }
 }
 
