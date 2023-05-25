@@ -2,8 +2,10 @@ import React, {useState} from "react";
 import {TasksList} from "./TasksList";
 import {action} from "@storybook/addon-actions";
 import {v1} from "uuid";
+import {Meta, StoryObj} from "@storybook/react";
+import AddItemForm from "./AddItemForm";
 
-export default {
+/*export default {
     title: 'Tasks',
     components: TasksList,
 }
@@ -63,5 +65,42 @@ export const TaskBaseExample = () => {
                 changeTaskTitle={changeTaskTitleCallback} />
         </>
     )
+}*/
+
+const meta: Meta<typeof TasksList> = {
+    title: 'TODOLISTS/Task',
+    component: TasksList,
+    tags: ['autodocs'],
+    argTypes: {
+        changeTaskStatus: {
+            action: 'clicked',
+        },
+        changeTaskTitle: {
+            action: 'clicked',
+        },
+        removeTask: {
+            action: 'clicked',
+        }
+    }
 }
 
+type Story = StoryObj<typeof TasksList>
+
+export const TaskListStoryExampleOne: Story = {
+    args: {
+        tasks: [
+            {id: '1', title: 'JavaScript', isDone: false},
+            {id: '2', title: 'React', isDone: false},
+        ]
+    }
+}
+export const TaskListStoryExampleTwo: Story = {
+    args: {
+        tasks: [
+            {id: '1', title: 'JavaScript', isDone: true},
+            {id: '2', title: 'React', isDone: true},
+        ]
+    }
+}
+
+export default meta;

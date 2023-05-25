@@ -2,7 +2,6 @@ import React, {ChangeEvent, useState} from "react";
 import {EditableSpan} from "./EditableSpan";
 import {action} from "@storybook/addon-actions";
 import {Meta, StoryObj} from "@storybook/react";
-import AddItemForm from "./AddItemForm";
 
 /*export default {
     title: 'Editable span',
@@ -39,7 +38,7 @@ export const EditableSpanStory: Story = {
 }
 
 export const EditableSpanStoryExampleTwo = (props: any) => {
-    const [editMode, setEditMode] = useState<boolean>(false)
+    const [editMode, setEditMode] = useState<boolean>(true)
     const [localTitle, setLocalTitle] = useState<string>('Test title')
 
     const changeLocalTitle = (event: ChangeEvent<HTMLInputElement>) => {
@@ -50,21 +49,21 @@ export const EditableSpanStoryExampleTwo = (props: any) => {
         setEditMode(true)
     }
     const offEditMode = () => {
-        setEditMode(false)
+        setEditMode(true)
             props.changeTitle(localTitle)
     }
 
     return (
         editMode ? <input
-    value={localTitle}
-    onChange={changeLocalTitle}
-    autoFocus
-    onBlur={offEditMode}
-/> : <span
-    className={props.spanClasses}
-    onDoubleClick={onEditMode}
->{localTitle}</span>
-)
+        value={localTitle}
+        onChange={changeLocalTitle}
+        autoFocus
+        onBlur={offEditMode}
+        /> : <span
+        className={props.spanClasses}
+        onDoubleClick={onEditMode}
+        >{localTitle}</span>
+    )
 }
 
 export default meta;
