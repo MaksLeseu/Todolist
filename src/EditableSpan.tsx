@@ -13,7 +13,7 @@ export const EditableSpan: FC<EditableSpanPropsType> = memo((
         changeTitle
     }
 ) => {
-    console.log('EditableSpan')
+
     const [editMode, setEditMode] = useState<boolean>(false)
     const [localTitle, setLocalTitle] = useState<string>(title)
 
