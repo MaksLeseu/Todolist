@@ -1,10 +1,15 @@
-import React, {useState} from "react";
+import React, {ChangeEvent, useState} from "react";
 import {TasksList} from "./TasksList";
 import {action} from "@storybook/addon-actions";
 import {v1} from "uuid";
 import {Meta, StoryObj} from "@storybook/react";
 import AddItemForm from "./AddItemForm";
 import {TasksListWithRedux} from "./TasksListWithRedux";
+import {ReduxStoreProviderDecorator} from "./stories/ReduxStoreProviderDecorator";
+import {changeTaskStatusAC} from "./reducers/task-reducer";
+import {useSelector} from "react-redux";
+import {AppRootStateType} from "./reducers/store";
+import {TaskType} from "./Todolist";
 
 /*export default {
     title: 'Tasks',
@@ -71,29 +76,23 @@ export const TaskBaseExample = () => {
 const meta: Meta<typeof TasksListWithRedux> = {
     title: 'TODOLISTS/Task',
     component: TasksListWithRedux,
+    decorators: [ReduxStoreProviderDecorator],
     tags: ['autodocs'],
-    argTypes: {
-        task: {id: '1', title: 'JavaScript', isDone: false}
+    args: {
+        task: {id: '1', title: 'JavaScript', isDone: true},
+        todoListId: 'todoListId_1'
     }
 }
 
 type Story = StoryObj<typeof TasksListWithRedux>
 
-export const TaskListStoryExampleOne: Story = {
-    args: {
-        /*tasks: [
-            {id: '1', title: 'JavaScript', isDone: false},
-            {id: '2', title: 'React', isDone: false},
-        ]*/
-    }
+const TaskCopy = () => {
+    const task = useSelector<AppRootStateType, TaskType>(state => state.tasks['todoListId_1'][0])
+    return <TasksListWithRedux task={task} todoListId={'todoListId_1'} />
 }
-export const TaskListStoryExampleTwo: Story = {
-    args: {
-        /*tasks: [
-            {id: '1', title: 'JavaScript', isDone: true},
-            {id: '2', title: 'React', isDone: true},
-        ]*/
-    }
+
+export const TaskListStoryExampleOne: Story = {
+    render: () => <TaskCopy />
 }
 
 export default meta;

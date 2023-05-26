@@ -17,16 +17,16 @@ const todoListId_2 = v1();
 
 const initialGlobalState = {
     todolists: [
-        {id: todoListId_1, title: 'What to learn', filter: 'all'},
-        {id: todoListId_2, title: 'What to buy', filter: 'all'}
+        {id: 'todoListId_1', title: 'What to learn', filter: 'all'},
+        {id: 'todoListId_2', title: 'What to buy', filter: 'all'}
     ],
     tasks: {
-        [todoListId_1]: [
+        ['todoListId_1']: [
             {id: v1(), title: 'HTML & CSS', isDone: true},
             {id: v1(), title: 'JavaScript & TypeScript', isDone: true},
             {id: v1(), title: 'React & Reduce', isDone: false},
         ],
-        [todoListId_2]: [
+        ['todoListId_2']: [
             {id: v1(), title: 'Milk', isDone: true},
             {id: v1(), title: 'Bread', isDone: true},
             {id: v1(), title: 'Meat', isDone: false},
