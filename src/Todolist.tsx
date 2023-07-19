@@ -1,5 +1,4 @@
-import React, {ChangeEvent, useState, KeyboardEvent, useCallback, memo, useMemo} from 'react';
-import {TasksList} from "./TasksList";
+import React, {useCallback, memo} from 'react';
 import {filterValueType} from "./App";
 import AddItemForm from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
