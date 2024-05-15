@@ -42,7 +42,6 @@ export type TasksStateType = {
 }
 
 const AppWithRedux = (): JSX.Element => {
-    console.log('AppWithRedux')
 
     // BLL
     const todoListId_1 = v1();
